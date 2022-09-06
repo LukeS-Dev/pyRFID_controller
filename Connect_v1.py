@@ -5,7 +5,7 @@ from config_files import*
 
 
 
-class reader_setup:
+class readerSetup:
     api_power = "/stapi/v0/ant/pwr"
     api_inv = "/stapi/v0/inv/timed"
 
@@ -16,9 +16,9 @@ class reader_setup:
         self.api_key = api_key
         self.base_Url = api_base_url
         self.retries = retries
-        self.headers = self.constructHeader()
+        self.headers = self.construct_Header()
 
-    def constructHeader(self):
+    def construct_Header(self):
         headers = {
             'Authorization': f'Bearer {self.api_key}',
             'Content-Type': 'application/json;charset=utf-8'
@@ -43,17 +43,17 @@ class reader_setup:
                 print(f"Connection could not be established. Attempt to reconnect try {i}")
 
     def power(self):
-        return self.extract_info(reader_setup.api_power)
+        return self.extract_info(readerSetup.api_power)
     # Extracting the power of the reader
 
 
     # Running a timed inventory 
     def timed_inv(self):
-        return self.extract_info(reader_setup.api_inv)
+        return self.extract_info(readerSetup.api_inv)
 
 
 if __name__ == '__main__':
-    reader = reader_setup(api_base_url, api_key)
+    reader = readerSetup(api_base_url, api_key)
     attempt = reader.attempt_connection()
     r_power = reader.power()
     r_inv = reader.timed_inv()
