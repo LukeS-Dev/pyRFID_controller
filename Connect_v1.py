@@ -55,7 +55,8 @@ class readerSetup:
 
     # Running a timed inventory 
     def timed_inv(self, set_time):
-        return self.extract_info(readerSetup.api_inv + '?timeframe=' + set_time)
+        return self.extract_info(readerSetup.api_inv 
+                         + '?timeframe=' + set_time)
 
 
 if __name__ == '__main__':
