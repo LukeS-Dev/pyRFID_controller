@@ -119,7 +119,7 @@ if __name__ == '__main__':
 
         if counter < len(parse_inv_data)-1:
             counter+=1
-
+    
 
     print(r_power.text)
     print(r_inv.text)
