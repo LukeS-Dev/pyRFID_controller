@@ -2,7 +2,6 @@
 from email import header
 import re
 import requests
-from config_file_test import*
 
 # Creating Class set up
 class ReaderClass:

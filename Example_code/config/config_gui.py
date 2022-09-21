@@ -1,4 +1,4 @@
-from config_handler import ConfigHandler
+from ConfigClass import ConfigHandler
 from tkinter import *
 from tkinter import ttk
 
