@@ -1,7 +1,11 @@
 # pyRFID_controller
 
 ## Introduction
-pyRFID Controller is a Software designed to communicate, store and distribute RFID reader telemetry.
+pyRFID Controller is a Software designed to communicate, store and distribute telemetry from Sensthys RFID modules. <br> 
+
+The communication is built on SensAPI (Rest-API) : https://www.sensthys.com/RESTdocs/#tag/Antenna <br> 
+
+To get started, download the dependancies and run the main script. 
 
 <br>
 
