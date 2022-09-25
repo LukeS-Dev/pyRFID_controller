@@ -5,9 +5,7 @@ pyRFID Controller is a Software designed to communicate, store and distribute te
 
 The communication is built on SensAPI (Rest-API) : https://www.sensthys.com/RESTdocs/#tag/Antenna <br> 
 
-To get started, download the dependancies and run the main script. 
-
-<br>
+To get started, download the dependancies, configure the generated config.log script with your API Key & IP address.
 
 ## Requirements
 To get started you will need
