@@ -15,7 +15,7 @@ api_url = content['API Config']['URL']
 
 # ---------------------------- Testing Statements ---------------------------- #
 # print(config_load.load())
-file = open("config.json")
+file = open("Config.json")
 file_contents = file.read()
 print(api_key)
 print(api_url)
