@@ -1,11 +1,14 @@
+from operator import index
 from Reader_Class import* 
 import logging
 import json
 import time
 import Config_Handler
 import collections
+import pandas as pd
 from datetime import datetime
 import time
+import csv 
 
 # Logging file setup
 file_name = 'Reader.log'
@@ -78,15 +81,51 @@ if __name__ == '__main__':
     total_unique_tags = len(uniq)
     # current_time = now.strftime("%H:%M:%S")
     # Setting up dictionary to store only EPC values and read counts 
-    epc_count_dict = [{"Current Time": current_time[i], "EPC Value":epc_array[i], "Count":count_array[i]}
-                                         for i in range(len(epc_array))]
-    
-    
-    # print(epc_count_dict)
+    epc_count_dict = [{"Current Time": current_time[i], "EPC Value":epc_array[i],
+                                    "Count":count_array[i]} for i in range(len(epc_array))]
 
-    # print(uniq)
-    print(total_unique_tags)
+    tot_uniq_tag = {'Total Unique Tags': total_unique_tags}
+    epc_count_dict.append(tot_uniq_tag)
     print(epc_count_dict)
+    
+    epc_count_dict_pd = {f'{i}': {"Current Time": current_time[i], "EPC Value":epc_array[i],
+                                    "Count":count_array[i]} for i in range(len(epc_array))}
+    total_unique_tags_dict = {'Total Unique Tags Read':{f'{len(epc_array)+1}': total_unique_tags}}
+
+
+
+    # Creating json to contain all the tag information read in a single inventory cycle 
+    # then converting the json into csv
+    inventory_cycle_json = json.dumps(epc_count_dict_pd)
+
+    with open('Inventory_Cycle.json', 'w+') as inventory_cycle:
+        inventory_cycle.write(inventory_cycle_json)
+    inventory_cycle.close()
+        
+    inventory_cycle_pd = pd.read_json('inventory_cycle.json', orient = 'index')
+    # inventory_cycle_pd.concat(total_unique_tags_frame)
+
+    inventory_cycle_pd.to_csv('Inventory_Cycle.csv', index = True)
+
+
+    with open('Inventory_Cycle.csv', 'a', newline = '') as csv_file:
+        csv_file.write("")
+        header_key = ['Total Unique Tags']
+        writer = csv.DictWriter(csv_file, fieldnames = header_key)
+        writer.writeheader()
+        writer.writerow(tot_uniq_tag)
+    csv_file.close()
+
+    # print(total_unique_tags_frame)
+    # print(test)
+    # print(inventory_cycle_pd)
+    # print(test3_pd)
+    # print(test2_pd)
+    # print(epc_count_dict)
+    
+    # print(uniq)
+    # print(total_unique_tags)
+    # print(epc_count_dict)
     # print(len(seen))
     # print(seen)
 

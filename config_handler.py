@@ -9,7 +9,7 @@ config_opener.save_config()
 content = config_opener.get_config_volatile()
 
 api_key = content['API Config']['Key']
-api_base_url = content['API Config']['URL']
+api_url = content['API Config']['URL']
 # change_key = config_opener.change_API_key('xxxxxxxx')
 
 
@@ -18,5 +18,5 @@ api_base_url = content['API Config']['URL']
 file = open("config.json")
 file_contents = file.read()
 print(api_key)
-print(api_base_url)
+print(api_url)
 print(file_contents)

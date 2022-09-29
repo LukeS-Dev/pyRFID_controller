@@ -1,22 +1,24 @@
+from distutils.command.config import config
 from doctest import FAIL_FAST
 from genericpath import exists
 import json
 import os.path, sys
+from pathlib import Path
 from pickle import TRUE
 from sre_constants import SUCCESS 
 
 # Set up config file as class
 class ConfigClass:
     # Creating flags to highlight success or fail during a function call
-    SUCCESS = 0
-    FAIL = -1
+    # SUCCESS = 0
+    # FAIL = -1
 
     def __init__(self):
-        self.flag = 2
+        # self.flag = 2
         self.__config_volatile = {}
 
     # Creating a default config file
-    def default_config(self):
+    def create_default_config(self):
         default_config = {
             "API Config": {
                     "Key": "00000000", 
@@ -37,30 +39,40 @@ class ConfigClass:
         return default_config
 
     # Creating a checking function to see if config_temp.txt exists -> can insert additional checks here
-    def check_config(self):
-        try:
-            check_file = open("config.json")
-            self.flag =  ConfigClass.SUCCESS
-            return self.flag
-        except:
-            self.flag = ConfigClass.FAIL
-            return self.flag
+    def check_config_exists(self):
+        # try:
+        #     check_file = open("config.json")
+        #     self.flag =  ConfigClass.SUCCESS
+        #     return self.flag
+        # except:
+        #     self.flag = ConfigClass.FAIL
+        #     return self.flag
+        path_to_file = 'config.json'
+        path = Path(path_to_file)
+
+        if path.is_file() == True:
+            config_exists = True
+        else:
+            config_exists = False
+        return config_exists
     
     # Loading the config settings if file exists and if it doesn't,
     # it loads the default config file
     def load_config(self):
-        file_check = self.check_config()
+        config_exists = self.check_config_exists()
 
-        if file_check == ConfigClass.SUCCESS:
+        if config_exists == True:
             with open("config.json", "r") as json_data_file:
                 self.__config_volatile = json.load(json_data_file)
                 # print(data)
+            json_data_file.close()
             return self.__config_volatile
         else:
             with open('config.json', "w+") as default_file:
-                f = default_file.write(self.default_config())
-                self.__config_volatile = json.loads(self.default_config())
+                f = default_file.write(self.create_default_config())
+                self.__config_volatile = json.loads(self.create_default_config())
                 # print(f)
+            default_file.close()
             return self.__config_volatile
     
     # Set config volatile value

@@ -9,7 +9,8 @@ config = ConfigHandler()
 root = Tk()
 root.geometry("300x300")
 
-config_frame = ttk.Frame(root)
+ttk.Label(root,text="RFID Settings ",font=('Calibri',24),relief=RIDGE,borderwidth=12,width=18).pack(pady=15)
+config_frame = ttk.Frame(root,relief=RIDGE,borderwidth=10)
 config_frame.pack()
 
 #Initialize constants.
@@ -40,30 +41,30 @@ def save_config_gui():
     config.save_config()
     print(config.get_config_volatile())
 
-ttk.Label(config_frame,text="Api Key").pack()
+ttk.Label(config_frame,text="Api Key").grid(row=0,column=0,sticky='w')
 entry_key = ttk.Entry(config_frame,textvariable=api_key)
-entry_key.pack()
+entry_key.grid(row=0,column=1,padx=2,pady=2)
 
-ttk.Label(config_frame,text="Base URL").pack()
+ttk.Label(config_frame,text="Base URL").grid(row=1,column=0,sticky='w')
 entry_url = ttk.Entry(config_frame,textvariable=api_url)
-entry_url.pack()
+entry_url.grid(row=1,column=1,padx=2,pady=2)
 
-ttk.Label(config_frame,text="Inventory read interval").pack()
+ttk.Label(config_frame,text="Inv read interval").grid(row=2,column=0,sticky='w')
 entry_url = ttk.Entry(config_frame,textvariable=inv_interval)
-entry_url.pack()
+entry_url.grid(row=2,column=1,padx=2,pady=2)
 
-ttk.Label(config_frame,text="Read cycles").pack()
+ttk.Label(config_frame,text="Read cycles").grid(row=3,column=0,sticky='w')
 entry_url = ttk.Entry(config_frame,textvariable=inv_cycles)
-entry_url.pack()
+entry_url.grid(row=3,column=1,padx=2,pady=2)
 
-ttk.Label(config_frame,text="Antenna Power").pack()
+ttk.Label(config_frame,text="Antenna Power").grid(row=4,column=0,sticky='w')
 entry_url = ttk.Entry(config_frame,textvariable=ant_power)
-entry_url.pack()
+entry_url.grid(row=4,column=1,padx=2,pady=2)
 
-ttk.Label(config_frame,text="Antenna Sequence").pack()
+ttk.Label(config_frame,text="Antenna Sequence").grid(row=5,column=0,sticky='w')
 entry_url = ttk.Entry(config_frame,textvariable=ant_seq)
-entry_url.pack()
+entry_url.grid(row=5,column=1,padx=20,pady=2)
 
-ttk.Button(config_frame,text="Save",command=save_config_gui).pack()
+ttk.Button(config_frame,text="Save",command=save_config_gui).grid(row=6,column=0,columnspan=2,padx=2,pady=12)
 
 root.mainloop()
