@@ -62,13 +62,13 @@ class ConfigClass:
         config_exists = self.check_config_exists()
 
         if config_exists == True:
-            with open("Config.json", "r") as json_data_file:
+            with open("config.json", "r") as json_data_file:
                 self.__config_volatile = json.load(json_data_file)
                 # print(data)
             json_data_file.close()
             return self.__config_volatile
         else:
-            with open('Config.json', "w+") as default_file:
+            with open('config.json', "w+") as default_file:
                 f = default_file.write(self.create_default_config())
                 self.__config_volatile = json.loads(self.create_default_config())
                 # print(f)
@@ -92,13 +92,13 @@ class ConfigClass:
 
     def save_config(self):
         save_file = json.dumps(self.__config_volatile)
-        with open('Config.json', 'w') as save_settings:
+        with open('config.json', 'w') as save_settings:
             save_settings = save_settings.write(save_file)
         return save_settings
 
     # Creating an open file function to override new config settings
     def open_file(self, file_contents):
-        with open('Config.json', "w") as change_config:
+        with open('config.json', "w") as change_config:
             change_config = change_config.write(file_contents)
         return change_config
         

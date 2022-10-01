@@ -3,17 +3,18 @@ from Reader_Class import*
 import logging
 import json
 import time
-import Config_Handler
+import Config_Handler 
+import collections
 import pandas as pd
 from datetime import datetime
 import time
 import csv 
 
 # Logging file setup
-# file_name = 'Reader.log'
-# logging.basicConfig(filename=file_name, 
-#                         level=logging.INFO,
-#                         format='%(levelname)s:%(asctime)s:%(message)s')
+file_name = 'Reader.log'
+logging.basicConfig(filename=file_name, 
+                        level=logging.INFO,
+                        format='%(levelname)s:%(asctime)s:%(message)s')
 
 
 # Main function loop
@@ -65,8 +66,8 @@ if __name__ == '__main__':
         epc_array.append(epc_values)
         count_array.append(count)
         current_time.append(now.strftime("%H:%M:%S"))
-        # logging.info('EPC Read: {} \n Read Count: {} '
-        #                     .format(epc_values, count))
+        logging.info('EPC Read: {} \n Read Count: {} '
+                            .format(epc_values, count))
 
         now = datetime.now()
         if counter <= len(parsed_inv_data)-1:
@@ -78,34 +79,36 @@ if __name__ == '__main__':
                 seen.add(i)
     
     total_unique_tags = len(uniq)
-
     # current_time = now.strftime("%H:%M:%S")
+    # Setting up dictionary to store only EPC values and read counts 
+    epc_count_dict = [{"Current Time": current_time[i], "EPC Value":epc_array[i],
+                                    "Count":count_array[i]} for i in range(len(epc_array))]
 
-    # Setting total unique tags dictionary to be appended to the csv file alongside inventory
-    # cycle dictionary
-    total_unique_tags_dict = {'Total Unique Tags': total_unique_tags} 
-
-    #Creating inventory cycle dictionary with index to convert as a panda object later
-    inventory_cycle_dict = {f'{i}': {"Current Time": current_time[i], "EPC Value":epc_array[i],
+    total_unique_tags_dict = {'Total Unique Tags': total_unique_tags}
+    epc_count_dict.append(total_unique_tags_dict)
+    print(epc_count_dict)
+    
+    epc_count_dict_pd = {f'{i}': {"Current Time": current_time[i], "EPC Value":epc_array[i],
                                     "Count":count_array[i]} for i in range(len(epc_array))}
+
+
 
     # Creating json to contain all the tag information read in a single inventory cycle 
     # then converting the json into csv
-    inventory_cycle_json = json.dumps(inventory_cycle_dict)
+    inventory_cycle_json = json.dumps(epc_count_dict_pd)
 
-    # Writing the inventory cycle into a json file
     with open('Inventory_Cycle.json', 'w+') as inventory_cycle:
         inventory_cycle.write(inventory_cycle_json)
     inventory_cycle.close()
         
-    # Converting json file into a panda object
     inventory_cycle_pd = pd.read_json('inventory_cycle.json', orient = 'index')
+    # inventory_cycle_pd.concat(total_unique_tags_frame)
 
-    # Converting panda to csv file
     inventory_cycle_pd.to_csv('Inventory_Cycle.csv', index = False)
 
-    # Appending Total Unique Tags to the csv file
+
     with open('Inventory_Cycle.csv', 'a', newline = '') as csv_file:
+        csv_file.write("")
         header_key = ['Total Unique Tags']
         writer = csv.DictWriter(csv_file, fieldnames = header_key)
         writer.writerow({})
@@ -113,6 +116,18 @@ if __name__ == '__main__':
         writer.writerow(total_unique_tags_dict)
     csv_file.close()
 
+    # print(total_unique_tags_frame)
+    # print(test)
+    # print(inventory_cycle_pd)
+    # print(test3_pd)
+    # print(test2_pd)
+    # print(epc_count_dict)
+    
+    # print(uniq)
+    # print(total_unique_tags)
+    # print(epc_count_dict)
+    # print(len(seen))
+    # print(seen)
 
     # Setting the power to all antennas simultaneously for both reading and writing power
     set_power = reader.set_all_power(33,33)    
@@ -126,5 +141,5 @@ if __name__ == '__main__':
     # That the reader spends reading tags on a specific antenna before moving on to read.
     # on the next antenna sequence.
     dwell_interval = reader.dwell_time(500)
-
+    # print(dwell_interval.text)
 
