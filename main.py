@@ -85,14 +85,16 @@ if __name__ == '__main__':
                                     "Count":count_array[i]} for i in range(len(epc_array))]
 
     total_unique_tags_dict = {'Total Unique Tags': total_unique_tags}
-    epc_count_dict.append(total_unique_tags_dict)
+    # epc_count_dict.append(total_unique_tags_dict)
     print(epc_count_dict)
     
     epc_count_dict_pd = {f'{i}': {"Current Time": current_time[i], "EPC Value":epc_array[i],
-                                    "Count":count_array[i]} for i in range(len(epc_array))}
+                                    "Count":count_array[i]} for i in range(len(epc_array)) }
 
+    epc_count_dict_pd['0'] = {"Current Time": current_time[0], "EPC Value":epc_array[0],
+                                    "Count":count_array[0], 'Total Unique Tags': total_unique_tags}
 
-
+    print(epc_count_dict_pd['0'])
     # Creating json to contain all the tag information read in a single inventory cycle 
     # then converting the json into csv
     inventory_cycle_json = json.dumps(epc_count_dict_pd)
@@ -107,14 +109,14 @@ if __name__ == '__main__':
     inventory_cycle_pd.to_csv('Inventory_Cycle.csv', index = False)
 
 
-    with open('Inventory_Cycle.csv', 'a', newline = '') as csv_file:
-        csv_file.write("")
-        header_key = ['Total Unique Tags']
-        writer = csv.DictWriter(csv_file, fieldnames = header_key)
-        writer.writerow({})
-        writer.writeheader()
-        writer.writerow(total_unique_tags_dict)
-    csv_file.close()
+    # with open('Inventory_Cycle.csv', 'a', newline = '') as csv_file:
+    #     csv_file.write("")
+    #     header_key = ['Total Unique Tags']
+    #     writer = csv.DictWriter(csv_file, fieldnames = header_key)
+    #     writer.writerow({})
+    #     writer.writeheader()
+    #     writer.writerow(total_unique_tags_dict)
+    # csv_file.close()
 
     # print(total_unique_tags_frame)
     # print(test)
