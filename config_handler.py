@@ -1,4 +1,4 @@
-from ConfigClass import ConfigClass
+from config_class import ConfigClass
 
 config_opener = ConfigClass()
 config_load = config_opener.load_config()

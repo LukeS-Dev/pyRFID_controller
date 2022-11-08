@@ -1,9 +1,9 @@
 from operator import index
-from Reader_Class import* 
+from reader_class import* 
 import logging
 import json
 import time
-import Config_Handler 
+import config_handler
 import collections
 import pandas as pd
 from datetime import datetime
@@ -33,8 +33,8 @@ if __name__ == '__main__':
     now = datetime.now()
 
     # Initialising reader class
-    api_base_url = Config_Handler.api_url
-    api_key = Config_Handler.api_key
+    api_base_url = config_handler.api_url
+    api_key = config_handler.api_key
     reader = ReaderClass(api_base_url, api_key)
 
     attempt = reader.attempt_connection()

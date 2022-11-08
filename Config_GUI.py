@@ -1,11 +1,11 @@
 from typing import Container
 # from ConfigClass import ConfigClass
-import Config_Handler 
+import config_handler
 from tkinter import *
 from tkinter import ttk
 
 # Accessing the config file
-config = Config_Handler.config_opener
+config = config_handler.config_opener
 
 # Application Name
 win = Tk() 
